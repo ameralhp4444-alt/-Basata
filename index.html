@@ -1,0 +1,78 @@
+<div class="field">
+            <label>رقم الهاتف</label>
+            <input type="tel" placeholder="01xxxxxxxxx">
+          </div>
+
+          <div class="field">
+            <label>كلمة المرور</label>
+            <input type="password" placeholder="اكتب كلمة المرور">
+          </div>
+
+          <button class="primary" onclick="login()">
+            تسجيل الدخول
+          </button>
+
+          <button class="secondary" onclick="showSignup()">
+            إنشاء حساب جديد
+          </button>
+
+          <button class="back" onclick="showStart()">
+            ← الرجوع
+          </button>
+
+          <div id="loginMessage" class="message"></div>
+        </div>
+
+      </div>
+
+      <div class="english-badge">
+        <span class="flag">🇬🇧</span>
+        English Learning Platform
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+
+    function hideAll() {
+      document.querySelectorAll(".form").forEach(form => {
+        form.classList.remove("active");
+      });
+    }
+
+    function showStart() {
+      hideAll();
+      document.getElementById("startScreen").classList.add("active");
+    }
+
+    function showSignup() {
+      hideAll();
+      document.getElementById("signupScreen").classList.add("active");
+    }
+
+    function showLogin() {
+      hideAll();
+      document.getElementById("loginScreen").classList.add("active");
+    }
+
+    function createAccount() {
+      const message = document.getElementById("signupMessage");
+
+      message.style.display = "block";
+      message.innerText =
+        "تم استلام بيانات التسجيل. سيتم ربط الحساب بقاعدة البيانات في الخطوة القادمة ✅";
+    }
+
+    function login() {
+      const message = document.getElementById("loginMessage");
+
+      message.style.display = "block";
+      message.innerText =
+        "سيتم ربط تسجيل الدخول بقاعدة البيانات في الخطوة القادمة ✅";
+    }
+
+  </script>
+
+</body>
+</html>
