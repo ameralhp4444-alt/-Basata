@@ -1,38 +1,170 @@
-$("paymentMessage").textContent =
-    "بوابة الدفع الحقيقية سيتم ربطها بالسيرفر وبوابة دفع آمنة.";
+$("#menuBtn")
+  .addEventListener(
+    "click",
+    () =>
+      $("#sidebar")
+        .classList.toggle(
+          "open"
+        )
+  );
 
-};
 
-/* فتح لوحة الطالب */
+/* الوضع الليلي */
 
-function openStudent() {
+$("#themeBtn")
+  .addEventListener(
+    "click",
+    () => {
 
-  if (currentUser) {
+      document.body
+        .classList.toggle(
+          "dark"
+        );
 
-    $("studentName").textContent =
-      أهلاً ${currentUser.name} 👋;
 
-  } else {
+      localStorage.setItem(
+        "basata_dark",
 
-    $("studentName").textContent =
-      "أهلاً بيك 👋";
+        document.body
+          .classList.contains("dark")
+          ? "1"
+          : "0"
+      );
 
-  }
+    }
+  );
 
-  showPage("studentPage");
+
+/* تسجيل الخروج */
+
+$("#logoutBtn")
+  .addEventListener(
+    "click",
+    () => {
+
+      localStorage.removeItem(
+        "basata_user"
+      );
+
+
+      $("#app")
+        .classList.add(
+          "hidden"
+        );
+
+
+      $("#loginPage")
+        .classList.remove(
+          "hidden"
+        );
+
+
+      $("#loginForm").reset();
+
+    }
+  );
+
+
+/* غلق نافذة الدرس */
+
+$("#closeModal")
+  .addEventListener(
+    "click",
+    closeLesson
+  );
+
+
+$("#lessonModal")
+  .addEventListener(
+    "click",
+    event => {
+
+      if(
+        event.target.id ===
+        "lessonModal"
+      ){
+
+        closeLesson();
+
+      }
+
+    }
+  );
+
+
+/* إكمال الدرس */
+
+$("#completeBtn")
+  .addEventListener(
+    "click",
+    () => {
+
+      if(!currentLesson)
+        return;
+
+
+      if(
+        !completed.includes(
+          currentLesson.id
+        )
+      ){
+
+        completed.push(
+          currentLesson.id
+        );
+
+      }
+
+
+      saveCompleted();
+
+
+      closeLesson();
+
+
+      renderLessons(
+        "homeLessons",
+        3
+      );
+
+
+      renderLessons(
+        "allLessons"
+      );
+
+
+      updateProgress();
+
+    }
+  );
+
+
+/* حفظ الوضع الليلي */
+
+if(
+  localStorage.getItem(
+    "basata_dark"
+  ) === "1"
+){
+
+  document.body
+    .classList.add(
+      "dark"
+    );
+
 }
 
-/* دخول الكورس */
 
-$("startCourseBtn").onclick = () => {
+/* الدخول التلقائي */
 
-  $("lessonArea").classList.remove("hidden");
+const savedUser =
+  getUser();
 
-  $("startCourseBtn").textContent =
-    "الكورس مفتوح ✓";
 
-  $("lessonArea").scrollIntoView({
-    behavior: "smooth"
-  });
+if(savedUser){
 
-};
+  enterPlatform(
+    savedUser
+  );
+
+}
